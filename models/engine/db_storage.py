@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {
@@ -46,6 +46,25 @@ class DBStorage:
         )
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def show_tables(self):
+        """Show all tables in the database"""
+        # Establish a connection
+        connection = self.__engine.connect()
+        query = text("SELECT * FROM CITIES")
+
+        # Execute the query
+        result_proxy = connection.execute(query)
+
+        # Fetch the results
+        results = result_proxy.fetchall()
+
+        # Print the names of the tables
+        for row in results:
+            print(row[0])
+        self.reload()
+        # Close the connection
+        connection.close()
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -102,7 +121,7 @@ class DBStorage:
             # Check if key exists within the dictionary
             if object in objects:
                 # Return Object
-                return objects[objects]
+                return objects[object]
         # If there is no object just return None.
         return None
 
