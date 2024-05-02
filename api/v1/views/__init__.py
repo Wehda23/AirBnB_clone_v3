@@ -2,6 +2,7 @@
 """
 File that contains Blueprint
 """
+
 from flask import Blueprint
 
 
