@@ -12,11 +12,15 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 
+@app.teardown_appcontext
+def teardown_appcontext(exception):
+    """
+    Function that runs when application is closed
+    """
+    storage.close()
+
+
 if __name__ == "__main__":
-    host = getenv("HBNB_API_HOST")
-    port = getenv("HBNB_API_PORT")
-    if not host:
-        host = "0.0.0.0"
-    if not port:
-        port = "5000"
-    app.run(host="0.0.0.0", port="5000")
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = int(getenv("HBNB_API_PORT", 5000))
+    app.run(host=host, port=port, threaded=True)
