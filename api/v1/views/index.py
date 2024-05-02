@@ -19,6 +19,7 @@ def OKStatus():
     response = {"status": "OK"}
     return jsonify(response)
 
+
 @app_views.route("/stats")
 def stats():
     """Function to return stats"""
@@ -28,9 +29,8 @@ def stats():
         "amenities": Amenity,
         "places": Place,
         "reviews": Review,
-        "users": User
+        "users": User,
     }
     for key in models:
         models[key] = storage.count(models[key])
     return jsonify(models)
-
