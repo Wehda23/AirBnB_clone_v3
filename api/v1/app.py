@@ -2,11 +2,10 @@
 """
 File contains script to run flask app
 """
-
+from os import getenv
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from os import getenv
 
 
 app = Flask(__name__)
@@ -23,6 +22,6 @@ def downtear(exception):
 
 
 if __name__ == "__main__":
-    host = getenv("HBNB_API_HOST", "0.0.0.0")
-    port = int(getenv("HBNB_API_PORT", 5000))
-    app.run(host=host, port=port, threaded=True)
+    HOST = getenv("HBNB_API_HOST", "0.0.0.0")
+    PORT = int(getenv("HBNB_API_PORT", 5000))
+    app.run(host=HOST, port=PORT, threaded=True)
