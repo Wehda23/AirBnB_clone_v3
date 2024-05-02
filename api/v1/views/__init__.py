@@ -1,8 +1,3 @@
-#!/usr/bin/python3
-"""
-File that contains Blueprint
-"""
-
 from flask import Blueprint
 
 
