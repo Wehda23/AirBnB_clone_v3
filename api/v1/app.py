@@ -21,6 +21,12 @@ def downtear(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Handle 404 errors with JSON response."""
+    return jsonify({"error": "Not found"}), 404
+
+
 if __name__ == "__main__":
     HOST = getenv("HBNB_API_HOST", "0.0.0.0")
     PORT = int(getenv("HBNB_API_PORT", 5000))
