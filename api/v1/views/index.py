@@ -1,36 +1,30 @@
 #!/usr/bin/python3
-"""
-Contains apis
-"""
+""" Index """
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
-from models.state import State
 from models.review import Review
+from models.state import State
 from models.user import User
 from models import storage
-from flask import jsonify
 from api.v1.views import app_views
+from flask import jsonify
 
 
-@app_views.route("/status")
-def OKStatus():
-    """Function to return ok status"""
-    response = {"status": "OK"}
-    return jsonify(response)
+@app_views.route("/status", methods=["GET"], strict_slashes=False)
+def status():
+    """Status of API"""
+    return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats")
-def stats():
-    """Function to return stats"""
-    models = {
-        "states": State,
-        "cities": City,
-        "amenities": Amenity,
-        "places": Place,
-        "reviews": Review,
-        "users": User,
-    }
-    for key in models:
-        models[key] = storage.count(models[key])
-    return jsonify(models)
+@app_views.route("/stats", methods=["GET"], strict_slashes=False)
+def number_objects():
+    """Retrieves the number of each objects by type"""
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
+
+    num_objs = {}
+    for i in range(len(classes)):
+        num_objs[names[i]] = storage.count(classes[i])
+
+    return jsonify(num_objs)
