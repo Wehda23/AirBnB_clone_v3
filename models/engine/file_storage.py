@@ -92,7 +92,7 @@ class FileStorage:
         # If class and id of the object
         if cls and id:
             # Form the key
-            object = f"{cls.__name__}.{id}"
+            object = "{}.{}".format(cls.__name__, id)
             # Get all objects
             objects = self.all(cls)
             # Check if key exists within the dictionary
